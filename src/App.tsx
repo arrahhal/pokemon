@@ -4,7 +4,11 @@ import Card from "./components/Card"
 function App() {
   const [isFlipped, setFlip] = useState(false);
   const [imgUrl, setImgUrl] = useState("/src/assets/pokeball.png");
+  const [isFlipping, setFlipping] = useState(false);
+
   const handleCardClick = () => {
+    if (isFlipping) return;
+    setFlipping(true);
     setFlip(true);
   };
 
@@ -13,10 +17,14 @@ function App() {
     setImgUrl("/src/assets/music-off.png")
   }
 
+  const handleCardFront = () => {
+    setFlipping(false);
+  }
+
   return (
     <>
       <div>
-        <Card name="pokemon" imgUrl={imgUrl} isFlipped={isFlipped} handleClick={handleCardClick} handleFlip={handleCardFlip} />
+        <Card name="pokemon" imgUrl={imgUrl} isFlipped={isFlipped} handleClick={handleCardClick} handleBack={handleCardFlip} handleFront={handleCardFront} />
       </div>
     </>
   )
