@@ -1,5 +1,8 @@
 import { useState } from "react";
 import Card from "./components/Card"
+import getPokemons from "./helpers/pokeapi";
+
+const pm = await getPokemons(10);
 
 function App() {
   const [isFlipped, setFlip] = useState(false);
@@ -15,6 +18,7 @@ function App() {
   const handleCardFlip = () => {
     setFlip(false);
     setImgUrl("/src/assets/music-off.png")
+    console.log(pm);
   }
 
   const handleCardFront = () => {
