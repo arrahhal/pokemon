@@ -1,4 +1,5 @@
 interface CardProps {
+  id: number;
   name: string;
   imgUrl: string;
   isFlipped: boolean;
@@ -7,9 +8,9 @@ interface CardProps {
   handleFront: () => void;
 }
 
-export default function Card({ name = "pokemon name", imgUrl = "/src/assets/pokeball.png", isFlipped, handleClick, handleBack, handleFront }: CardProps) {
+export default function Card({ name = "pokemon name", imgUrl = "/src/assets/pokeball.png", isFlipped, handleClick, handleBack, handleFront, id }: CardProps) {
   return (
-    <div style={{ perspective: "1000px" }} className="w-44 aspect-[10/14] rounded" onClick={handleClick}>
+    <div style={{ perspective: "1000px" }} className="w-44 aspect-[10/14] rounded" onClick={handleClick} id={id.toString()}>
       <div style={{ transformStyle: "preserve-3d", transform: `rotateY(${isFlipped ? "180deg" : "0"})`, transition: "transform 0.8s" }} className="relative w-full h-full" onTransitionEnd={isFlipped ? handleBack : handleFront}>
         <div style={{ backfaceVisibility: "hidden" }} className="absolute w-full h-full flex flex-col bg-yellow-50">
           <div className="flex-1 flex justify-center items-center">

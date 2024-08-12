@@ -1,10 +1,11 @@
-const MAX_POKEMON_ID: number = 1000;
-
+import { useState, useEffect } from "react";
 interface Pokemon {
   id: number;
   name: string;
   img: string;
 }
+
+const MAX_POKEMON_ID: number = 1000;
 
 async function getPokemon(id: number) {
   let pokemon;
@@ -26,7 +27,7 @@ async function getRandomPokemon() {
   return pokemon;
 }
 
-export default async function getPokemons(count: number) {
+async function getPokemons(count: number) {
   const pokemons: Pokemon[] = [];
   const taken: Record<number, boolean> = {};
   while (pokemons.length < count) {
@@ -38,3 +39,21 @@ export default async function getPokemons(count: number) {
   }
   return pokemons;
 }
+
+export const usePokemons = (count: number) => {
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [spinner, setSpinner] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setSpinner(true);
+      const data: Pokemon[] = await getPokemons(count);
+      setPokemons(data);
+      setSpinner(false);
+    };
+
+    fetchData();
+  }, [count]);
+
+  return { pokemons, spinner };
+};
