@@ -1,33 +1,18 @@
-import { useState } from "react";
 import Card from "./components/Card"
 import Spinner from "./components/Spinner"
 import { usePokemons } from "./usePokemons";
+import useCards from "./useCards"
 
 function App() {
-  const [isFlipped, setFlip] = useState(false);
-  const [imgUrl, setImgUrl] = useState("/src/assets/pokeball.png");
-  const [isFlipping, setFlipping] = useState(false);
   const { pokemons, spinner } = usePokemons(10);
+  const { areCardsFlipped, pokemonList, onCardsClick, onCardsBackVisible, onCardsFrontVisible } = useCards(pokemons);
 
-  const handleCardClick = () => {
-    if (isFlipping) return;
-    setFlipping(true);
-    setFlip(true);
-  };
-
-  const handleCardFlip = () => {
-    setFlip(false);
-    setImgUrl(pokemons[0].img)
-  }
-
-  const handleCardFront = () => {
-    setFlipping(false);
-  }
+  if (spinner || pokemonList.length === 0)
+    return <Spinner />
 
   return (
     <>
-      {<Spinner />}
-      {!spinner && <Card id={pokemons[0].id} name={pokemons[0].name} imgUrl={imgUrl} isFlipped={isFlipped} handleClick={handleCardClick} handleBack={handleCardFlip} handleFront={handleCardFront} />}
+      <Card id={pokemonList[0].id} name={pokemonList[0].name} imgUrl={pokemonList[0].img} isFlipped={areCardsFlipped} handleClick={onCardsClick} handleBack={onCardsBackVisible} handleFront={onCardsFrontVisible} />
     </>
   )
 }

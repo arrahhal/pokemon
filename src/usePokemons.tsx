@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-interface Pokemon {
+export interface Pokemon {
   id: number;
   name: string;
   img: string;
