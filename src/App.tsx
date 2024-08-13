@@ -7,7 +7,7 @@ function App() {
   const [isFlipped, setFlip] = useState(false);
   const [imgUrl, setImgUrl] = useState("/src/assets/pokeball.png");
   const [isFlipping, setFlipping] = useState(false);
-  const { pokemons, spinner } = usePokemons(11);
+  const { pokemons, spinner } = usePokemons(10);
 
   const handleCardClick = () => {
     if (isFlipping) return;
@@ -26,10 +26,8 @@ function App() {
 
   return (
     <>
-      <div>
-        {spinner && <Spinner />}
-        {!spinner && <Card id={pokemons[0].id} name={pokemons[0].name} imgUrl={imgUrl} isFlipped={isFlipped} handleClick={handleCardClick} handleBack={handleCardFlip} handleFront={handleCardFront} />}
-      </div>
+      {<Spinner />}
+      {!spinner && <Card id={pokemons[0].id} name={pokemons[0].name} imgUrl={imgUrl} isFlipped={isFlipped} handleClick={handleCardClick} handleBack={handleCardFlip} handleFront={handleCardFront} />}
     </>
   )
 }
