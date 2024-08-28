@@ -28,6 +28,8 @@ a:hover {
 }
 
 body {
+  background-image: url(./assets/pokemon-bg.png);
+  background-size: cover;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
