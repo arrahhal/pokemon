@@ -11,42 +11,43 @@ function shuffleArray(array: Pokemon[]) {
   return shuffledArray;
 }
 
+// WARN: some cards glitch while flipping; i tried to find an easy solution but i couldn't so i will try again later (maybe after finishing the app)
 function useCards(initialPokemons: Pokemon[]) {
-  const [areCardsFlipped, setAreCardsFlipped] = useState(false);
-  const [areCardsAnimating, setAreCardsAnimating] = useState(false);
-  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+  const [cardsState, setCardsState] = useState<"front" | "back" | "backToFront" | "frontToBack">("front");
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>(initialPokemons);
 
   useEffect(() => {
-    if (initialPokemons.length > 0)
+    if (initialPokemons.length !== 0) {
       setPokemonList(initialPokemons);
+    }
   }, [initialPokemons])
 
   const shuffleCards = () => {
-    const shuffled = shuffleArray(pokemonList);
+    const shuffled = shuffleArray([...pokemonList]);
     setPokemonList(shuffled);
+    setCardsState("backToFront");
   }
 
   const onCardsClick = () => {
-    if (areCardsAnimating) return;
-    setAreCardsAnimating(true);
-    setAreCardsFlipped(true);
-  };
+    if (cardsState === "front") {
+      setCardsState("frontToBack");
+    }
+  }
 
-  const onCardsBackVisible = () => {
-    shuffleCards();
-    setAreCardsFlipped(false);
-  };
-
-  const onCardsFrontVisible = () => {
-    setAreCardsAnimating(false);
+  const onTransitionEnd = () => {
+    if (cardsState === "frontToBack") {
+      setCardsState("back");
+      shuffleCards();
+    } else if (cardsState === "backToFront") {
+      setCardsState("front");
+    }
   };
 
   return {
-    areCardsFlipped,
     pokemonList,
+    cardsState,
     onCardsClick,
-    onCardsBackVisible,
-    onCardsFrontVisible,
+    onTransitionEnd,
   };
 }
 

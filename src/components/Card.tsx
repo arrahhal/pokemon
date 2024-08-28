@@ -2,16 +2,15 @@ interface CardProps {
   id: number;
   name: string;
   imgUrl: string;
-  isFlipped: boolean;
+  cardState: "back" | "front" | "backToFront" | "frontToBack";
   handleClick: () => void;
-  handleBack: () => void;
-  handleFront: () => void;
+  onTransitionEnd: () => void;
 }
 
-export default function Card({ name = "pokemon name", imgUrl = "/src/assets/pokeball.png", isFlipped, handleClick, handleBack, handleFront, id }: CardProps) {
+export default function Card({ name = "pokemon name", imgUrl = "/src/assets/pokeball.png", cardState = "front", handleClick, onTransitionEnd, id }: CardProps) {
   return (
     <div style={{ perspective: "1000px" }} className="w-44 aspect-[10/14] rounded" onClick={handleClick} id={id.toString()}>
-      <div style={{ transformStyle: "preserve-3d", transform: `rotateY(${isFlipped ? "180deg" : "0"})`, transition: "transform 0.8s" }} className="relative w-full h-full" onTransitionEnd={isFlipped ? handleBack : handleFront}>
+      <div style={{ transformStyle: "preserve-3d", transform: `rotateY(${(cardState === "frontToBack" || cardState === "back") ? "180deg" : "0"})`, transition: "transform 0.8s" }} className="relative w-full h-full" onTransitionEnd={onTransitionEnd}>
         <div style={{ backfaceVisibility: "hidden" }} className="absolute w-full h-full flex flex-col bg-yellow-50">
           <div className="flex-1 flex justify-center items-center">
             <img src={imgUrl} width={"96px"} height={"96px"} />
