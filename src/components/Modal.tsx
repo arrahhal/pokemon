@@ -1,10 +1,4 @@
-type MtProps = {
-  children: React.ReactNode;
-};
-
-function Mt({ children }: MtProps) {
-  return <div className="mt-8">{children}</div>;
-}
+import { Mt } from "./Utils";
 
 type ModalBackgroundProps = {
   children: React.ReactNode;
@@ -16,7 +10,7 @@ function ModalBackground({ children }: ModalBackgroundProps) {
       <div className="w-full max-w-xl px-4 py-2">
         <div
           style={borderStyles}
-          className="bg-white text-black border border-black py-4 px-8 shadow-md font-pokemon"
+          className="bg-white text-black border border-black py-4 px-8 shadow-md"
         >
           {children}
         </div>
@@ -78,9 +72,9 @@ export function StartModal({ onSelect }: { onSelect: (cnt: number) => void; }) {
     <Modal title="Select a Difficlity Level">
       <Mt>
         <div className="space-y-4">
-          <ButtonItem id="easy-level" count={5} label="Easy" onClick={onSelect} />
-          <ButtonItem id="medium-level" count={10} label="Medium" onClick={onSelect} />
-          <ButtonItem id="hard-level" count={15} label="Hard" onClick={onSelect} />
+          <ButtonItem id="easy-level" count={6} label="Easy" onClick={onSelect} />
+          <ButtonItem id="medium-level" count={12} label="Medium" onClick={onSelect} />
+          <ButtonItem id="hard-level" count={18} label="Hard" onClick={onSelect} />
         </div>
       </Mt>
       <Mt>
