@@ -2,9 +2,10 @@ import Spinner from "./components/Spinner"
 import { usePokemons } from "./usePokemons";
 import useCards from "./useCards"
 import CardsGrid from "./components/CardsGrid";
-import Wrapper from "./components/Wrapper"
+import { Wrapper, Center, Mt } from "./components/Utils"
 import { StartModal } from "./components/Modal";
 import useModal from "./useModal";
+import Logo from "./components/Logo";
 
 
 function App() {
@@ -20,10 +21,20 @@ function App() {
 
   return (
     <>
-      <header></header>
-      <Wrapper>
-        <CardsGrid pokemonsList={pokemonList} onCardsClick={onCardsClick} cardsState={cardsState} onTransitionEnd={onTransitionEnd} />
-      </Wrapper >
+      <header>
+        <Wrapper>
+          <Center>
+            <Logo />
+          </Center>
+        </Wrapper>
+      </header>
+      <Mt>
+        <main>
+          <Wrapper>
+            <CardsGrid pokemonsList={pokemonList} onCardsClick={onCardsClick} cardsState={cardsState} onTransitionEnd={onTransitionEnd} />
+          </Wrapper >
+        </main>
+      </Mt>
     </>
   )
 }
