@@ -41,7 +41,7 @@ body {
   background-size: cover;
   margin: 0;
   min-height: 100vh;
-  display: block;
+  font-family: "Press Start 2P", system-ui, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 #root {
