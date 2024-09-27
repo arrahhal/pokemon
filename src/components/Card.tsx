@@ -1,3 +1,5 @@
+import cardBg from '../assets/card-back.png'
+
 interface CardProps {
   id: number;
   name: string;
@@ -18,7 +20,7 @@ export default function Card({ name = "pokemon name", imgUrl = "/src/assets/poke
           <p className="text-center text-white py-1">{name}</p>
         </div>
         <div style={{ transform: "rotateY(180deg)", transition: "transform 0.8s", backfaceVisibility: "hidden" }} className="absolute h-full w-full rounded-md">
-          <img src="/src/assets/card-back.png" />
+          <img src={cardBg} />
         </div>
       </div>
     </div >
