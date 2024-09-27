@@ -4,13 +4,13 @@ import Card from "./Card";
 interface CardsGridProps {
   pokemonsList: Pokemon[];
   cardsState: "front" | "back" | "backToFront" | "frontToBack";
-  onCardsClick: () => void;
+  onCardClick: (id: number) => void;
   onTransitionEnd: () => void;
 }
 
 export default function CardsGrid({
   pokemonsList = [],
-  onCardsClick,
+  onCardClick,
   onTransitionEnd,
   cardsState = "front",
 }: CardsGridProps) {
@@ -22,7 +22,7 @@ export default function CardsGrid({
           id={pokemon.id}
           name={pokemon.name}
           imgUrl={pokemon.img}
-          handleClick={onCardsClick}
+          handleClick={onCardClick}
           onTransitionEnd={onTransitionEnd}
           cardState={cardsState}
         />

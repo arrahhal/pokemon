@@ -36,8 +36,8 @@ function useCards(initialPokemons: Pokemon[]) {
 
   const onTransitionEnd = () => {
     if (cardsState === "frontToBack") {
-      setCardsState("back");
-      shuffleCards();
+        shuffleCards();
+        setCardsState("back");
     } else if (cardsState === "backToFront") {
       setCardsState("front");
     }
@@ -46,8 +46,10 @@ function useCards(initialPokemons: Pokemon[]) {
   return {
     pokemonList,
     cardsState,
+
     onCardsClick,
     onTransitionEnd,
+    setCardsState,
   };
 }
 

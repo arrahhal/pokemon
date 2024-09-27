@@ -28,12 +28,13 @@ const borderStyles = {
 type ModalProps = {
   title?: string;
   children: React.ReactNode;
+  centerTitle: boolean;
 };
 
-export function Modal({ title = '', children }: ModalProps) {
+export function Modal({ title = '', children, centerTitle }: ModalProps) {
   return (
     <ModalBackground>
-      {title && <p className="font-bold">{title}</p>}
+      {title && <p className={`font-bold ${centerTitle ? "text-center" : ""}`}>{title}</p>}
       {title ? <Mt>{children}</Mt> : children}
     </ModalBackground>
   );
@@ -41,16 +42,16 @@ export function Modal({ title = '', children }: ModalProps) {
 
 type InputItemProps = {
   id: string;
-  count: number;
+  count?: number;
   label: string;
-  onClick: (count: number) => void;
+  onClick: () => void;
 }
 
-function ButtonItem({ id, count, label, onClick }: InputItemProps) {
+function ButtonItem({ id, label, onClick }: InputItemProps) {
   return (
     <button
       id={id}
-      onClick={() => onClick(count)}
+      onClick={onClick}
       className="block relative arrow"
     >
       {label}
@@ -72,9 +73,9 @@ export function StartModal({ onSelect }: { onSelect: (cnt: number) => void; }) {
     <Modal title="Select a Difficlity Level">
       <Mt>
         <div className="space-y-4">
-          <ButtonItem id="easy-level" count={6} label="Easy" onClick={onSelect} />
-          <ButtonItem id="medium-level" count={12} label="Medium" onClick={onSelect} />
-          <ButtonItem id="hard-level" count={18} label="Hard" onClick={onSelect} />
+          <ButtonItem id="easy-level" label="Easy" onClick={() => { onSelect(6) }} />
+          <ButtonItem id="medium-level" label="Medium" onClick={() => { onSelect(12) }} />
+          <ButtonItem id="hard-level" label="Hard" onClick={() => { onSelect(18) }} />
         </div>
       </Mt>
       <Mt>
@@ -88,4 +89,28 @@ export function StartModal({ onSelect }: { onSelect: (cnt: number) => void; }) {
       </Mt>
     </Modal>
   );
+}
+
+type EndProps = {
+  score: number;
+  level: number;
+  onPlayAgain: () => void;
+  onQuit: () => void;
+}
+
+export function EndModal({ score, level, onPlayAgain, onQuit }: EndProps) {
+  return (
+    <Modal title={score === level ? "You Won!" : "Game Over!"} centerTitle={true}>
+      <div>
+        <img className="w-64 mx-auto" src={score === level ? "https://media2.giphy.com/media/xx0JzzsBXzcMK542tx/giphy.gif" : "https://media.tenor.com/TRTMIXMvMlAAAAAC/ditto-sad.gif"} alt="" />
+        <p className="text-sm text-center">{`your final score is: ${score}`}</p>
+      </div>
+      <Mt>
+        <div className="space-y-2">
+          <ButtonItem id="again-btn" label="Play Again" onClick={onPlayAgain} />
+          <ButtonItem id="quit-btn" label="Quit" onClick={onQuit} />
+        </div>
+      </Mt>
+    </Modal>
+  )
 }

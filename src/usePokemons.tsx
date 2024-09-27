@@ -44,6 +44,13 @@ export const usePokemons = (count: number) => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [spinner, setSpinner] = useState(true);
 
+  async function updatePokemons(cnt: number) {
+    setSpinner(true);
+    const data: Pokemon[] = await getPokemons(cnt);
+    setPokemons(data);
+    setSpinner(false);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       setSpinner(true);
@@ -55,5 +62,5 @@ export const usePokemons = (count: number) => {
     fetchData();
   }, [count]);
 
-  return { pokemons, spinner };
+  return { pokemons, spinner, updatePokemons };
 };
