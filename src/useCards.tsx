@@ -13,7 +13,7 @@ function shuffleArray(array: Pokemon[]) {
 
 // WARN: some cards glitch while flipping; i tried to find an easy solution but i couldn't so i will try again later (maybe after finishing the app)
 function useCards(initialPokemons: Pokemon[]) {
-  const [cardsState, setCardsState] = useState<"front" | "back" | "backToFront" | "frontToBack">("front");
+  const [cardsState, setCardsState] = useState<"front" | "back">("front");
   const [pokemonList, setPokemonList] = useState<Pokemon[]>(initialPokemons);
 
   useEffect(() => {
@@ -25,30 +25,19 @@ function useCards(initialPokemons: Pokemon[]) {
   const shuffleCards = () => {
     const shuffled = shuffleArray([...pokemonList]);
     setPokemonList(shuffled);
-    setCardsState("backToFront");
   }
 
   const onCardsClick = () => {
-    if (cardsState === "front") {
-      setCardsState("frontToBack");
-    }
+    setTimeout(async () => {
+      shuffleCards();
+      setCardsState("back");
+    }, 800);
   }
-
-  const onTransitionEnd = () => {
-    if (cardsState === "frontToBack") {
-        shuffleCards();
-        setCardsState("back");
-    } else if (cardsState === "backToFront") {
-      setCardsState("front");
-    }
-  };
 
   return {
     pokemonList,
     cardsState,
-
     onCardsClick,
-    onTransitionEnd,
     setCardsState,
   };
 }

@@ -5,13 +5,11 @@ interface CardsGridProps {
   pokemonsList: Pokemon[];
   cardsState: "front" | "back" | "backToFront" | "frontToBack";
   onCardClick: (id: number) => void;
-  onTransitionEnd: () => void;
 }
 
 export default function CardsGrid({
   pokemonsList = [],
   onCardClick,
-  onTransitionEnd,
   cardsState = "front",
 }: CardsGridProps) {
   return (
@@ -22,8 +20,7 @@ export default function CardsGrid({
           id={pokemon.id}
           name={pokemon.name}
           imgUrl={pokemon.img}
-          handleClick={onCardClick}
-          onTransitionEnd={onTransitionEnd}
+          handleClick={() => onCardClick(pokemon.id)}
           cardState={cardsState}
         />
       ))}

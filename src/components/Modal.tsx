@@ -28,10 +28,10 @@ const borderStyles = {
 type ModalProps = {
   title?: string;
   children: React.ReactNode;
-  centerTitle: boolean;
+  centerTitle?: boolean;
 };
 
-export function Modal({ title = '', children, centerTitle }: ModalProps) {
+export function Modal({ title = '', children, centerTitle = false }: ModalProps) {
   return (
     <ModalBackground>
       {title && <p className={`font-bold ${centerTitle ? "text-center" : ""}`}>{title}</p>}

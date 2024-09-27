@@ -1,6 +1,6 @@
+import { useState } from "react";
 import Spinner from "./components/Spinner"
 import { usePokemons } from "./usePokemons";
-import useCards from "./useCards"
 import CardsGrid from "./components/CardsGrid";
 import { Wrapper, Center, Mt } from "./components/Utils"
 import { StartModal, EndModal } from "./components/Modal";
@@ -10,15 +10,18 @@ import ScoreBoard from "./components/ScoreBoard";
 
 // the comment  the shapes the 
 function App() {
-  const { start, setStart, level, setLevel, end, setEnd, score, highest, handleCardSelect } = useGame();
+  const [level, setLevel] = useState(6);
   const { pokemons, spinner, updatePokemons } = usePokemons(level);
-  const { pokemonList, onCardsClick, cardsState, onTransitionEnd, setCardsState } = useCards(pokemons);
+  const { gameState, setGameState, setGameLevel, gameLevel, playerScore, playerMaxScore, handleCardSelect, pokemonList, cardsState, onCardsClick, setCardsState } = useGame(pokemons);
 
-  if (start)
-    return <StartModal onSelect={(level) => { setLevel(level); setStart(false) }} />
-  if (end)
+  if (level !== gameLevel) {
+    setLevel(gameLevel);
+  }
 
-    return <EndModal score={score} level={level} onPlayAgain={() => { setEnd(false); updatePokemons(level); setCardsState("front") }} onQuit={() => { setEnd(false); setStart(true); setCardsState("front") }} />
+  if (gameState === "start")
+    return <StartModal onSelect={(level) => { setGameLevel(level); setGameState("game") }} />
+  else if (gameState === "end")
+    return <EndModal score={playerScore} level={level} onPlayAgain={() => { setGameState("start"); updatePokemons(level); setCardsState("front") }} onQuit={() => { setGameState("start"); setCardsState("front") }} />
 
   if (spinner || pokemonList.length === 0)
     return <Spinner />
@@ -36,10 +39,11 @@ function App() {
         <main>
           <Wrapper>
             <Mt>
-              <ScoreBoard score={score} level={level} highest={highest} />
+              <ScoreBoard score={playerScore} level={level} highest={playerMaxScore} />
             </Mt>
             <Mt>
-              <CardsGrid pokemonsList={pokemonList} onCardClick={(id: number) => { onCardsClick(); handleCardSelect(id) }} cardsState={cardsState} onTransitionEnd={onTransitionEnd} />
+              {/* this is a very bad implementation i should keep the logic of the game inside useGame hook*/}
+              <CardsGrid pokemonsList={pokemonList} onCardClick={(id: number) => { onCardsClick(); handleCardSelect(id) }} cardsState={cardsState} />
             </Mt>
           </Wrapper >
         </main>
