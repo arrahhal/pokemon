@@ -52,8 +52,11 @@ export default function useGame(initialPokemons: Pokemon[]) {
   }
 
   const handleCardSelect = (id: number) => {
-    if (isSelected(id)) {
+    if (selectedCards.length === 0) {
       setPlayerScore(0);
+    }
+
+    if (isSelected(id)) {
       setGameState("end");
       setSelectedCards([]);
     }
@@ -65,6 +68,13 @@ export default function useGame(initialPokemons: Pokemon[]) {
         setGameState("end");
       setSelectedCards([...selectedCards, id]);
     }
+  }
+
+  const handleLevelSelected = (level: number) => {
+    setPlayerScore(0);
+    setGameState("game");
+    setSelectedCards([]);
+    setGameLevel(level);
   }
 
   return {
@@ -81,6 +91,7 @@ export default function useGame(initialPokemons: Pokemon[]) {
     setGameLevel,
     setIsCardsVisible,
     gameLevel,
-    selectedCards
+    selectedCards,
+    handleLevelSelected,
   };
 }

@@ -12,16 +12,16 @@ import ScoreBoard from "./components/ScoreBoard";
 function App() {
   const [level, setLevel] = useState(6);
   const { pokemons, spinner, updatePokemons } = usePokemons(level);
-  const { gameState, setGameState, setGameLevel, gameLevel, playerScore, playerMaxScore, handleCardSelect, pokemonList, cardsState, onCardsClick, setCardsState } = useGame(pokemons);
+  const { gameState, setGameState, handleLevelSelected, gameLevel, playerScore, playerMaxScore, handleCardSelect, pokemonList, cardsState, onCardsClick } = useGame(pokemons);
 
   if (level !== gameLevel) {
     setLevel(gameLevel);
   }
 
   if (gameState === "start")
-    return <StartModal onSelect={(level) => { setGameLevel(level); setGameState("game") }} />
+    return <StartModal onSelect={(level) => { handleLevelSelected(level); updatePokemons(level) }} />
   else if (gameState === "end")
-    return <EndModal score={playerScore} level={level} onPlayAgain={() => { setGameState("start"); updatePokemons(level); setCardsState("front") }} onQuit={() => { setGameState("start"); setCardsState("front") }} />
+    return <EndModal score={playerScore} level={level} onPlayAgain={() => { setGameState("game"); updatePokemons(level) }} onQuit={() => { setGameState("start") }} />
 
   if (spinner || pokemonList.length === 0)
     return <Spinner />
