@@ -21,7 +21,6 @@ export default function useGame(initialPokemons: Pokemon[]) {
   const [playerMaxScore, setPlayerMaxScore] = useState<number>(0);
   const [selectedCards, setSelectedCards] = useState<Array<number>>([]);
 
-
   useEffect(() => {
     if (initialPokemons.length !== 0) {
       setPokemonList(initialPokemons);
@@ -36,10 +35,12 @@ export default function useGame(initialPokemons: Pokemon[]) {
   const onCardsClick = () => {
     setCardsState("back");
 
-    setTimeout(async () => {
-      setCardsState("front");
+    setTimeout(() => {
       shuffleCards();
     }, 800);
+    setTimeout(() => {
+      setCardsState("front")
+    }, 900)
   }
 
 
